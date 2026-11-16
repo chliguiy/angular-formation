@@ -1,18 +1,17 @@
-import { httpResource } from '@angular/common/http';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { debounceTime, distinctUntilChanged, interval, map } from 'rxjs';
-import { Film } from './film.model';
+import { FilmsStore } from './films.store';
+import { FilmCard } from './film-card';
 
 @Component({
   selector: 'app-films',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, FilmCard],
   templateUrl: './films.html',
 })
 export class Films {
-  readonly films = httpResource<Film[]>(() => 'https://ghibliapi.vercel.app/films');
+  readonly films = inject(FilmsStore).films;
 
   constructor() {
     // Rafraîchissement toutes les 30 s ; désabonnement auto à la destruction du composant

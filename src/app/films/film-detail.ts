@@ -8,7 +8,14 @@ import { Film } from './film.model';
   template: `
     @let f = film();
     <article class="overflow-hidden rounded-xl bg-white shadow-sm">
-      <img [src]="f.movie_banner" [alt]="f.title" class="h-64 w-full object-cover" />
+      <img
+        [src]="f.movie_banner"
+        [alt]="f.title"
+        width="533"
+        height="300"
+        fetchpriority="high"
+        class="aspect-[533/300] max-h-80 w-full bg-slate-100 object-cover"
+      />
       <div class="space-y-3 p-6">
         <a routerLink="/films" class="text-sm text-blue-700 hover:underline">← Retour aux films</a>
         <h2 class="text-2xl font-bold text-slate-800">{{ f.title }}</h2>
