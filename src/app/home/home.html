@@ -1,0 +1,164 @@
+<div class="min-h-screen bg-slate-50 px-4 py-10 sm:px-6">
+  <div class="mx-auto max-w-3xl">
+
+    <!-- En-tête -->
+    <div class="mb-8">
+      <p class="text-sm font-semibold uppercase tracking-wider text-indigo-600">
+        Annuaire
+      </p>
+
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        Utilisateurs
+      </h1>
+
+      <p class="mt-2 text-slate-500">
+        Consultez les informations des utilisateurs.
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div
+      class="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+    >
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          (click)="previousUser()"
+          [disabled]="userId() === 1"
+          class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          ← Précédent
+        </button>
+
+        <span class="text-sm font-medium text-slate-600">
+          Utilisateur
+          <span class="font-bold text-indigo-600">{{ userId() }}</span>
+          <span class="text-slate-400">/ 10</span>
+        </span>
+
+        <button
+          type="button"
+          (click)="nextUser()"
+          [disabled]="userId() === 10"
+          class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Suivant →
+        </button>
+      </div>
+
+      <button
+        type="button"
+        (click)="reload()"
+        class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Actualiser
+      </button>
+    </div>
+
+    @if (userState(); as state) {
+
+      <!-- Chargement -->
+      @if (state.status === 'loading') {
+        <div
+          role="status"
+          class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-8 text-slate-600 shadow-sm"
+        >
+          <span
+            aria-hidden="true"
+            class="h-5 w-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600"
+          ></span>
+
+          <span>Chargement de l'utilisateur...</span>
+        </div>
+
+      <!-- Erreur -->
+      } @else if (state.status === 'error') {
+        <div
+          role="alert"
+          class="rounded-2xl border border-red-200 bg-red-50 p-8"
+        >
+          <h2 class="text-lg font-semibold text-red-800">
+            Une erreur est survenue
+          </h2>
+
+          <p class="mt-1 text-sm text-red-700">
+            Impossible de charger l'utilisateur.
+          </p>
+
+          <button
+            type="button"
+            (click)="reload()"
+            class="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          >
+            Réessayer
+          </button>
+        </div>
+
+      <!-- Succès -->
+      } @else if (state.status === 'success') {
+        <article
+          class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        >
+          <!-- Identité -->
+          <div class="flex items-center gap-4 border-b border-slate-100 p-6 sm:p-8">
+            <div
+              aria-hidden="true"
+              class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-2xl font-bold text-indigo-700"
+            >
+              {{ state.user.name.charAt(0) }}
+            </div>
+
+            <div class="min-w-0">
+              <h2 class="truncate text-xl font-bold text-slate-900 sm:text-2xl">
+                {{ state.user.name }}
+              </h2>
+
+              <p class="mt-1 text-sm text-slate-500">
+                &#64;{{ state.user.username }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Informations -->
+          <dl class="grid gap-6 p-6 sm:grid-cols-2 sm:p-8">
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Email
+              </dt>
+              <dd class="mt-1 break-all text-sm font-medium text-slate-800">
+                {{ state.user.email }}
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Téléphone
+              </dt>
+              <dd class="mt-1 text-sm font-medium text-slate-800">
+                {{ state.user.phone }}
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Ville
+              </dt>
+              <dd class="mt-1 text-sm font-medium text-slate-800">
+                {{ state.user.address.city }}
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Entreprise
+              </dt>
+              <dd class="mt-1 text-sm font-medium text-slate-800">
+                {{ state.user.company.name }}
+              </dd>
+            </div>
+          </dl>
+        </article>
+      }
+    }
+  </div>
+</div>

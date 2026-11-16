@@ -1,0 +1,60 @@
+<div class="rounded-xl bg-white p-6 shadow-sm">
+  <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold text-slate-800">Films</h2>
+      <p class="mt-1 text-sm text-slate-500">Catalogue du Studio Ghibli</p>
+    </div>
+
+    <input
+      type="search"
+      name="search"
+      placeholder="Rechercher un titre ou un réalisateur…"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm
+             focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 sm:w-80"
+    />
+  </div>
+
+  @if (films.isLoading() && !films.hasValue()) {
+    <p class="py-10 text-center text-slate-500">Chargement des films…</p>
+  } @else if (films.error()) {
+    <p class="py-10 text-center text-red-600">Impossible de charger les films.</p>
+  } @else {
+    <p class="mb-4 text-sm text-slate-500">{{ filteredFilms().length }} film(s)</p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (film of filteredFilms(); track film.id) {
+        @defer (on viewport) {
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <img
+              [src]="film.movie_banner"
+              [alt]="film.title"
+              loading="lazy"
+              class="h-40 w-full object-cover"
+            />
+            <div class="p-4">
+              <h3 class="font-semibold text-slate-800">
+                <a [routerLink]="['/films', film.id]" class="hover:text-blue-700 hover:underline">{{ film.title }}</a>
+              </h3>
+              <p class="text-xs text-slate-500">
+                {{ film.original_title }} · {{ film.release_date }}
+              </p>
+              <p class="mt-2 line-clamp-3 text-sm text-slate-600">{{ film.description }}</p>
+              <div class="mt-3 flex items-center justify-between text-xs text-slate-500">
+                <span>{{ film.director }}</span>
+                <span class="rounded-full bg-green-100 px-2 py-1 font-medium text-green-700">
+                  {{ film.rt_score }}%
+                </span>
+              </div>
+            </div>
+          </article>
+        } @placeholder {
+          <div class="h-80 animate-pulse rounded-xl border border-slate-200 bg-slate-100"></div>
+        }
+      } @empty {
+        <p class="col-span-full py-10 text-center text-slate-500">Aucun film trouvé.</p>
+      }
+    </div>
+  }
+</div>
