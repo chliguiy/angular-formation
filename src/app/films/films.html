@@ -1,9 +1,28 @@
 <div class="rounded-xl bg-white p-6 shadow-sm">
+  @if (loaded() && !error()) {
+    <app-films-hero [films]="films()" />
+  }
+
   <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div>
       <h2 class="text-2xl font-bold text-slate-800">Films</h2>
       <p class="mt-1 text-sm text-slate-500">Catalogue du Studio Ghibli</p>
     </div>
+
+
+
+    <a
+      routerLink="/films/new"
+      class="rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-700"
+    >
+      + Ajouter un film
+    </a>
+    <a
+      routerLink="/films/new-signal"
+      class="rounded-lg border border-blue-600 px-4 py-2 text-center text-sm font-medium text-blue-600 hover:bg-blue-50"
+    >
+      + Form Signal
+    </a>
 
     <input
       type="search"
@@ -16,14 +35,14 @@
     />
   </div>
 
-  @if (films.isLoading() && !films.hasValue()) {
+  @if (!loaded() && !error()) {
     <!-- Skeleton de même géométrie que la grille finale (évite le CLS) -->
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
       @for (n of [1, 2, 3, 4, 5, 6]; track n) {
         <div class="h-[24rem] animate-pulse rounded-xl border border-slate-200 bg-slate-100"></div>
       }
     </div>
-  } @else if (films.error()) {
+  } @else if (error()) {
     <p class="py-10 text-center text-red-600">Impossible de charger les films.</p>
   } @else {
     <p class="mb-4 min-h-5 text-sm text-slate-500">{{ filteredFilms().length }} film(s)</p>
@@ -45,4 +64,5 @@
       }
     </div>
   }
+  <span class="mt-4 block text-sm text-slate-500">Nombre total de films : {{ nbFilms() }}</span>
 </div>

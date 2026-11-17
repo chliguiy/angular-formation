@@ -39,6 +39,14 @@ import { Film } from './film.model';
             {{ f.rt_score }}%
           </span>
         </div>
+        <a
+          [routerLink]="['/films', f.id]"
+          class="mt-3 block rounded-lg bg-blue-600 px-4 py-2 text-center text-sm font-medium text-white
+                 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          [attr.aria-label]="'Détails du film ' + f.title"
+        >
+          Détails
+        </a>
       </div>
     </article>
   `,

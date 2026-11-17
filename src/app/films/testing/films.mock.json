@@ -1,0 +1,27 @@
+[
+  {
+    "id": "2baf70d1-42bb-4437-b551-e5fed5a87abe",
+    "title": "Castle in the Sky",
+    "original_title": "天空の城ラピュタ",
+    "image": "https://example.com/castle-poster.jpg",
+    "movie_banner": "https://example.com/castle-banner.jpg",
+    "description": "Une jeune fille et un garçon partent à la recherche d'une cité volante.",
+    "director": "Hayao Miyazaki",
+    "release_date": "1986",
+    "running_time": "124",
+    "rt_score": "95",
+    "other_field": "This field is not part of the Film interface"
+  },
+  {
+    "id": "12cfb892-aac0-4c5b-94af-521852e46d6a",
+    "title": "Grave of the Fireflies",
+    "original_title": "火垂るの墓",
+    "image": "https://example.com/fireflies-poster.jpg",
+    "movie_banner": "https://example.com/fireflies-banner.jpg",
+    "description": "Deux orphelins tentent de survivre pendant la guerre.",
+    "director": "Isao Takahata",
+    "release_date": "1988",
+    "running_time": "89",
+    "rt_score": "97"
+  }
+]
