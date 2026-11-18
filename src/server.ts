@@ -25,6 +25,14 @@ const angularApp = new AngularNodeAppEngine();
  */
 
 /**
+ * Locale par défaut : / redirige vers /fr/ (mettre 'en' pour basculer).
+ */
+const DEFAULT_LOCALE = 'fr';
+app.get('/', (req, res, next) =>
+  req.originalUrl === '/' ? res.redirect(302, `/${DEFAULT_LOCALE}/`) : next(),
+);
+
+/**
  * Serve static files from /browser
  */
 app.use(

@@ -1,0 +1,11 @@
+{
+  "locale": "en",
+  "translations": {
+    "nav.title": " My applicationtest",
+    "nav.home": " Home ",
+    "nav.products": " Products ",
+    "nav.films": " Movies ",
+    "nav.logout": " Sign out ",
+    "nav.login": " Sign in "
+  }
+}
