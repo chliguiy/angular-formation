@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 
 @Component({
   imports: [],
@@ -6,8 +6,8 @@ import { Component, signal } from '@angular/core';
   styleUrl: './products.css',
   templateUrl: './products.html',
 })
-export class Products {
-  products: Array<{ id: number; name: string; description: string; selected: boolean }> = [];
+export class Products implements OnInit {
+  products: { id: number; name: string; description: string; selected: boolean }[] = [];
   toggleSelected(product: any): void {
     product.selected = !product.selected;
   }
