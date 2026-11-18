@@ -1,0 +1,11 @@
+{
+  "locale": "fr",
+  "translations": {
+    "nav.title": " Mon application test",
+    "nav.home": " Accueil ",
+    "nav.products": " Produits ",
+    "nav.films": " Films ",
+    "nav.logout": " Déconnexion ",
+    "nav.login": " Connexion "
+  }
+}

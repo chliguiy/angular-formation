@@ -51,7 +51,7 @@
                 }
               ],
               "outputHashing": "all",
-              "localize": true
+              "localize": ["fr", "en"]
             },
             "development": {
               "optimization": false,
@@ -71,7 +71,7 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-              "localize": true
+              "localize": ["fr", "en"]
             }
           },
           "defaultConfiguration": "production"
@@ -96,7 +96,10 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "setupFiles": ["src/test-setup.ts"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -114,21 +117,15 @@
         }
       },
       "i18n": {
-        "sourceLocale": {
-          "code": "fr",
-          "subPath": "fr"
-        },
+        "sourceLocale": "en-US",
         "locales": {
+          "fr": {
+            "translation": "src/locale/messages.fr.json",
+            "subPath": "fr"
+          },
           "en": {
             "translation": "src/locale/messages.en.json",
             "subPath": "en"
-          }
-        },
-        "architect": {
-          "build": {
-            "options": {
-              "localize": true
-            }
           }
         }
       }
