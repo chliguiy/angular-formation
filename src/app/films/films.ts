@@ -1,9 +1,8 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
-import { FilmsSignalStore } from './state/films.signal-store';
 import { FilmCard } from './film-card';
 import { FilmsHero } from './films-hero';
 import { FilmSignalsStore } from './state/film.signals';

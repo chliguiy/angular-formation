@@ -19,7 +19,8 @@ export class FilmForm {
   protected readonly fields: FieldConfig[] = [
     { type: 'input', name: 'title', label: 'Titre', wide: true, validators: [Validators.required, Validators.minLength(2)] },
     { type: 'input', name: 'original_title', label: 'Titre original', wide: true },
-    { type: 'input', name: 'director', label: 'Réalisateur', validators: [Validators.required] },
+    { type: 'input', name: 'director', label: 'Réalisateur', validators: [Validators.required] }, 
+  
     {
       type: 'select',
       name: 'language',

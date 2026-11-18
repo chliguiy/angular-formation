@@ -1,8 +1,7 @@
 import { AuthService } from './auth/auth.service';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Store } from './store';
-import { Counter } from './services/counter';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
