@@ -1,0 +1,120 @@
+<div class="mx-auto max-w-2xl rounded-xl bg-white p-6 shadow-sm">
+  <h2 class="mb-6 text-2xl font-bold text-slate-800">Ajouter un film <span class="text-sm font-normal text-slate-400">(Signal Form)</span></h2>
+
+  <form [formRoot]="f" class="grid gap-4 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <label for="title" class="mb-1 block text-sm font-medium text-slate-700">Titre</label>
+      <input id="title" type="text" [formField]="f.title" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.title().touched() && f.title().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.title().errors()) }}</p>
+      }
+    </div>
+    <div class="sm:col-span-2">
+      <label for="original_title" class="mb-1 block text-sm font-medium text-slate-700">Titre original</label>
+      <input id="original_title" type="text" [formField]="f.original_title" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.original_title().touched() && f.original_title().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.original_title().errors()) }}</p>
+      }
+    </div>
+    <div>
+      <label for="director" class="mb-1 block text-sm font-medium text-slate-700">Réalisateur</label>
+      <input id="director" type="text" [formField]="f.director" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.director().touched() && f.director().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.director().errors()) }}</p>
+      }
+    </div>
+    <div>
+      <label for="language" class="mb-1 block text-sm font-medium text-slate-700">Langue originale</label>
+      <select id="language" [formField]="f.language" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
+        <option value="">Choisir une langue…</option>
+        @for (l of languages; track l) {
+          <option [value]="l">{{ l }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label for="release_date" class="mb-1 block text-sm font-medium text-slate-700">Année de sortie</label>
+      <input id="release_date" type="text" [formField]="f.release_date" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.release_date().touched() && f.release_date().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.release_date().errors()) }}</p>
+      }
+    </div>
+    <div>
+      <label for="running_time" class="mb-1 block text-sm font-medium text-slate-700">Durée (min)</label>
+      <input id="running_time" type="text" [formField]="f.running_time" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.running_time().touched() && f.running_time().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.running_time().errors()) }}</p>
+      }
+    </div>
+    <div>
+      <label for="rt_score" class="mb-1 block text-sm font-medium text-slate-700">Score (0-100)</label>
+      <input id="rt_score" type="number" [formField]="f.rt_score" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.rt_score().touched() && f.rt_score().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.rt_score().errors()) }}</p>
+      }
+    </div>
+    <div class="sm:col-span-2">
+      <label for="movie_banner" class="mb-1 block text-sm font-medium text-slate-700">URL de la bannière</label>
+      <input id="movie_banner" type="url" [formField]="f.movie_banner" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.movie_banner().touched() && f.movie_banner().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.movie_banner().errors()) }}</p>
+      }
+    </div>
+    <div class="sm:col-span-2">
+      <label for="image" class="mb-1 block text-sm font-medium text-slate-700">URL de l'affiche (optionnel)</label>
+      <input id="image" type="url" [formField]="f.image" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+      @if (f.image().touched() && f.image().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.image().errors()) }}</p>
+      }
+    </div>
+    <div class="sm:col-span-2">
+      <label for="description" class="mb-1 block text-sm font-medium text-slate-700">Description</label>
+      <textarea id="description" [formField]="f.description" rows="4" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"></textarea>
+      @if (f.description().touched() && f.description().invalid()) {
+        <p class="mt-1 text-xs text-red-600">{{ error(f.description().errors()) }}</p>
+      }
+    </div>
+
+    <fieldset class="sm:col-span-2">
+      <legend class="mb-1 text-sm font-medium text-slate-700">Genres</legend>
+      <div class="space-y-2">
+        @for (g of f.genres; track g; let i = $index) {
+          <div class="flex gap-2">
+            <input
+              type="text"
+              [formField]="g"
+              [attr.aria-label]="'Genre ' + (i + 1)"
+              placeholder="Ex. Fantasy"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            />
+            <button
+              type="button"
+              (click)="removeGenre(i)"
+              [disabled]="model().genres.length === 1"
+              [attr.aria-label]="'Supprimer le genre ' + (i + 1)"
+              class="rounded-lg px-3 text-slate-500 hover:bg-slate-100 disabled:opacity-40"
+            >
+              ✕
+            </button>
+          </div>
+          @if (g().touched() && g().invalid()) {
+            <p class="text-xs text-red-600">Renseigne le genre ou supprime la ligne</p>
+          }
+        }
+      </div>
+      <button type="button" (click)="addGenre()" class="mt-2 text-sm font-medium text-blue-600 hover:underline">
+        + Ajouter un genre
+      </button>
+    </fieldset>
+
+    <div class="flex justify-end gap-3 sm:col-span-2">
+      <a routerLink="/films" class="rounded-lg px-4 py-2 text-sm text-slate-600 hover:bg-slate-100">Annuler</a>
+      <button
+        type="submit"
+        class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700"
+      >
+        Ajouter
+      </button>
+    </div>
+  </form>
+</div>

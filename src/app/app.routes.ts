@@ -45,6 +45,16 @@ export const routes: Routes = [
       import('./films/films').then((m) => m.Films),
   },
   {
+    path: 'films/new',
+    loadComponent: () =>
+      import('./films/film-form').then((m) => m.FilmForm),
+  },
+  {
+    path: 'films/new-signal',
+    loadComponent: () =>
+      import('./films/film-form-signal').then((m) => m.FilmFormSignal),
+  },
+  {
     path: 'films/:id',
     resolve: { film: filmResolver },
     loadComponent: () =>

@@ -2,7 +2,7 @@ import { Injectable, Service, signal } from '@angular/core';
 
 
 
-@Service({ autoProvided: false })
+@Service()
 export class Counter {
       readonly count = signal(0);
 

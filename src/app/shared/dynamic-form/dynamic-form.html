@@ -1,0 +1,89 @@
+<form [formGroup]="form()" (ngSubmit)="submit()" class="grid gap-4 sm:grid-cols-2" novalidate>
+  @for (f of fields(); track f.name) {
+    <div [class.sm:col-span-2]="f.wide || f.type === 'array'">
+      @switch (f.type) {
+        @case ('array') {
+          <fieldset>
+            <legend class="mb-1 text-sm font-medium text-slate-700">{{ f.label }}</legend>
+            <div class="space-y-2" [formArrayName]="f.name">
+              @for (item of array(f.name).controls; track item; let i = $index) {
+                <div class="flex gap-2">
+                  <input
+                    type="text"
+                    [formControlName]="i"
+                    [attr.aria-label]="f.label + ' ' + (i + 1)"
+                    [placeholder]="f.placeholder ?? ''"
+                    [class]="inputClass"
+                  />
+                  <button
+                    type="button"
+                    (click)="removeItem(f.name, i)"
+                    [disabled]="array(f.name).length === 1"
+                    [attr.aria-label]="'Supprimer ' + f.label + ' ' + (i + 1)"
+                    class="rounded-lg px-3 text-slate-500 hover:bg-slate-100 disabled:opacity-40"
+                  >
+                    ✕
+                  </button>
+                </div>
+                @if (showError(item)) {
+                  <p class="text-xs text-red-600">{{ message(item, f.errors) }}</p>
+                }
+              }
+            </div>
+            <button
+              type="button"
+              (click)="addItem(f.name)"
+              class="mt-2 text-sm font-medium text-blue-600 hover:underline"
+            >
+              {{ f.addLabel ?? '+ Ajouter' }}
+            </button>
+          </fieldset>
+        }
+        @default {
+          <label [for]="f.name" class="mb-1 block text-sm font-medium text-slate-700">{{ f.label }}</label>
+          @switch (f.type) {
+            @case ('textarea') {
+              <textarea
+                [id]="f.name"
+                [formControlName]="f.name"
+                [rows]="f.rows ?? 4"
+                [placeholder]="f.placeholder ?? ''"
+                [class]="inputClass"
+              ></textarea>
+            }
+            @case ('select') {
+              <select [id]="f.name" [formControlName]="f.name" [class]="inputClass">
+                <option value="">{{ f.placeholder ?? 'Choisir…' }}</option>
+                @for (o of f.options; track o.value) {
+                  <option [value]="o.value">{{ o.label }}</option>
+                }
+              </select>
+            }
+            @default {
+              <input
+                [id]="f.name"
+                [type]="f.inputType ?? 'text'"
+                [formControlName]="f.name"
+                [placeholder]="f.placeholder ?? ''"
+                [class]="inputClass"
+              />
+            }
+          }
+          @if (showError(control(f.name))) {
+            <p class="mt-1 text-xs text-red-600">{{ message(control(f.name), f.errors) }}</p>
+          }
+        }
+      }
+    </div>
+  }
+
+  <div class="flex justify-end gap-3 sm:col-span-2">
+    <ng-content />
+    <button
+      type="submit"
+      class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700"
+    >
+      {{ submitLabel() }}
+    </button>
+  </div>
+</form>
