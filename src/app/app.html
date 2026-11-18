@@ -7,7 +7,7 @@
       <a
         routerLink="/"
         class="text-xl font-bold text-blue-700"
-      >
+       i18n="@@nav.title">
         Mon application
       </a>
 
@@ -18,7 +18,7 @@
           routerLinkActive="bg-blue-50 text-blue-700"
           class="rounded-lg px-4 py-2 font-medium text-slate-600
                  transition-colors hover:bg-blue-50 hover:text-blue-700"
-        >
+         i18n="@@nav.home">
           Accueil
         </a>
         }
@@ -29,7 +29,7 @@
           routerLinkActive="bg-blue-50 text-blue-700"
           class="rounded-lg px-4 py-2 font-medium text-slate-600
                  transition-colors hover:bg-blue-50 hover:text-blue-700"
-        >
+                  i18n="@@nav.products">
           Produits
         </a>
         }
@@ -39,7 +39,7 @@
           routerLinkActive="bg-blue-50 text-blue-700"
           class="rounded-lg px-4 py-2 font-medium text-slate-600
                  transition-colors hover:bg-blue-50 hover:text-blue-700"
-        >
+         i18n="@@nav.films">
           Films
         </a>
 
@@ -49,17 +49,25 @@
             type="button"
             (click)="deconnexion()"
             class="rounded-lg px-4 py-2 font-medium text-slate-600 hover:bg-blue-50"
-          >
+           i18n="@@nav.logout">
             Déconnexion
           </button>
         } @else {
           <a
             routerLink="/connexion"
             class="rounded-lg px-4 py-2 font-medium text-slate-600 hover:bg-blue-50"
-          >
+           i18n="@@nav.login">
             Connexion
           </a>
         }
+
+
+        <a
+          [href]="'/' + autreLocale + '/'"
+          class="ml-2 rounded-lg border border-slate-200 px-2 py-1 text-sm uppercase text-slate-600"
+        >
+          {{ autreLocale }}
+        </a>
       </nav>
     </div>
   </header>

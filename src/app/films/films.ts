@@ -6,6 +6,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { FilmCard } from './film-card';
 import { FilmsHero } from './films-hero';
 import { FilmSignalsStore } from './state/film.signals';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 @Component({
   selector: 'app-films',
   imports: [RouterLink, FormsModule, FilmCard, FilmsHero],

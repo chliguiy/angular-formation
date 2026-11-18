@@ -1,0 +1,8 @@
+{
+  "/en": {
+    "target": "http://localhost:4201",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": false
+  }
+}
