@@ -1,0 +1,258 @@
+<div class="space-y-10">
+  <header>
+    <h1 class="text-2xl font-bold text-slate-800">@angular/aria</h1>
+    <p class="mt-1 text-sm text-slate-500">
+      Un exemple de chaque famille de directives : rôles ARIA, états et clavier gérés par la
+      librairie, style par Tailwind.
+    </p>
+  </header>
+
+  <!-- ACCORDION -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-accordion">
+    <h2 id="t-accordion" class="mb-3 text-lg font-semibold text-slate-800">Accordion</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngAccordionGroup</code>, <code>ngAccordionTrigger</code>,
+      <code>ngAccordionPanel</code>, <code>ngAccordionContent</code> — flèches haut/bas, Début/Fin.
+    </p>
+    <div ngAccordionGroup [multiExpandable]="true" class="divide-y divide-slate-200 rounded-lg border border-slate-200">
+      @for (item of faq; track item.titre) {
+        <div>
+          <h3>
+            <button
+              ngAccordionTrigger
+              [panel]="panel"
+              class="flex w-full items-center justify-between px-4 py-3 text-left font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+            >
+              {{ item.titre }}
+            </button>
+          </h3>
+          <div ngAccordionPanel #panel="ngAccordionPanel">
+            <ng-template ngAccordionContent>
+              <p class="px-4 pb-4 text-sm text-slate-600">{{ item.texte }}</p>
+            </ng-template>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-tabs">
+    <h2 id="t-tabs" class="mb-3 text-lg font-semibold text-slate-800">Tabs</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngTabs</code>, <code>ngTabList</code>, <code>ngTab</code>, <code>ngTabPanel</code>,
+      <code>ngTabContent</code> — onglet actif : <strong>{{ ongletActif() }}</strong>
+    </p>
+    <div ngTabs>
+      <ul ngTabList [(selectedTab)]="ongletActif" selectionMode="follow" aria-label="Fiche film" class="flex gap-1 border-b border-slate-200">
+        <li ngTab value="resume" class="cursor-pointer rounded-t-lg px-4 py-2 text-sm font-medium text-slate-600 aria-selected:bg-blue-50 aria-selected:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">Résumé</li>
+        <li ngTab value="casting" class="cursor-pointer rounded-t-lg px-4 py-2 text-sm font-medium text-slate-600 aria-selected:bg-blue-50 aria-selected:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">Casting</li>
+        <li ngTab value="avis" [disabled]="true" class="rounded-t-lg px-4 py-2 text-sm font-medium text-slate-300">Avis (désactivé)</li>
+      </ul>
+      <div ngTabPanel value="resume" class="py-4 text-sm text-slate-600">
+        <ng-template ngTabContent>Une jeune fille s'égare dans un monde d'esprits.</ng-template>
+      </div>
+      <div ngTabPanel value="casting" class="py-4 text-sm text-slate-600">
+        <ng-template ngTabContent>Réalisation : Hayao Miyazaki.</ng-template>
+      </div>
+      <div ngTabPanel value="avis" class="py-4 text-sm text-slate-600">
+        <ng-template ngTabContent>Aucun avis.</ng-template>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTBOX -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-listbox">
+    <h2 id="t-listbox" class="mb-3 text-lg font-semibold text-slate-800">Listbox</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngListbox</code> + <code>ngOption</code> (sélection multiple, recherche au clavier) —
+      choix : <strong>{{ studiosChoisis().join(', ') || 'aucun' }}</strong>
+    </p>
+    <ul
+      ngListbox
+      [(value)]="studiosChoisis"
+      [multi]="true"
+      aria-label="Studios"
+      class="w-64 rounded-lg border border-slate-200 p-1"
+    >
+      @for (studio of studios; track studio) {
+        <li
+          ngOption
+          [value]="studio"
+          [label]="studio"
+          class="cursor-pointer rounded px-3 py-2 text-sm text-slate-700 aria-selected:bg-blue-50 aria-selected:font-medium aria-selected:text-blue-700 data-[active=true]:ring-2 data-[active=true]:ring-blue-300"
+        >
+          {{ studio }}
+        </li>
+      }
+    </ul>
+  </section>
+
+  <!-- COMBOBOX -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-combobox">
+    <h2 id="t-combobox" class="mb-3 text-lg font-semibold text-slate-800">Combobox</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngCombobox</code>, <code>ngComboboxPopup</code>, <code>ngComboboxWidget</code> avec un
+      <code>ngListbox</code> filtré — choix : <strong>{{ filmChoisi()[0] ?? 'aucun' }}</strong>
+    </p>
+    <div class="relative w-72">
+      <input
+        ngCombobox
+        #combobox="ngCombobox"
+        [(value)]="recherche"
+        [(expanded)]="rechercheOuverte"
+        aria-label="Rechercher un film"
+        placeholder="Rechercher un film…"
+        class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
+      <ng-template ngComboboxPopup [combobox]="combobox">
+        <div
+          ngComboboxWidget
+          ngListbox
+          #listbox="ngListbox"
+          [(value)]="filmChoisi"
+          [activeDescendant]="listbox.activeDescendant()"
+          aria-label="Suggestions"
+          class="absolute left-0 right-0 z-10 mt-1 max-h-56 overflow-auto rounded-lg border border-slate-200 bg-white p-1 shadow-lg"
+        >
+          @for (film of suggestions(); track film) {
+            <div
+              ngOption
+              [value]="film"
+              [label]="film"
+              class="cursor-pointer rounded px-3 py-2 text-sm text-slate-700 aria-selected:bg-blue-50 aria-selected:text-blue-700 data-[active=true]:bg-slate-100"
+            >
+              {{ film }}
+            </div>
+          } @empty {
+            <div class="px-3 py-2 text-sm text-slate-400">Aucun résultat</div>
+          }
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-menu">
+    <h2 id="t-menu" class="mb-3 text-lg font-semibold text-slate-800">Menu et menubar</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngMenuBar</code>, <code>ngMenuTrigger</code>, <code>ngMenu</code>,
+      <code>ngMenuItem</code> (sous-menu, contenu différé <code>ngMenuContent</code>) — dernière
+      action : <strong>{{ derniereAction() }}</strong>
+    </p>
+    <div class="relative flex h-44 items-start gap-2">
+      <div ngMenuBar class="flex gap-1 rounded-lg border border-slate-200 p-1" aria-label="Barre de menus">
+        <button ngMenuTrigger [menu]="fichier" class="rounded px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">Fichier</button>
+        <button ngMenuTrigger [menu]="edition" class="rounded px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">Édition</button>
+      </div>
+
+      <div ngMenu #fichier="ngMenu" [hidden]="!fichier.visible()" (itemSelected)="derniereAction.set($event ?? '—')" class="absolute left-0 top-full z-10 mt-1 min-w-40 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+        <ng-template ngMenuContent>
+          @for (action of actions; track action) {
+            <div ngMenuItem [value]="action" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">{{ action }}</div>
+          }
+          <div ngMenuItem value="Exporter" [submenu]="export" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">Exporter ▸</div>
+        </ng-template>
+      </div>
+
+      <div ngMenu #export="ngMenu" [hidden]="!(fichier.visible() && export.visible())" (itemSelected)="derniereAction.set($event ?? '—')" class="absolute left-44 top-full z-20 mt-1 min-w-32 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+        <ng-template ngMenuContent>
+          <div ngMenuItem value="PDF" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">PDF</div>
+          <div ngMenuItem value="CSV" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">CSV</div>
+        </ng-template>
+      </div>
+
+      <div ngMenu #edition="ngMenu" [hidden]="!edition.visible()" (itemSelected)="derniereAction.set($event ?? '—')" class="absolute left-20 top-full z-10 mt-1 min-w-32 rounded-lg border border-slate-200 bg-white p-1 shadow-lg">
+        <ng-template ngMenuContent>
+          <div ngMenuItem value="Couper" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">Couper</div>
+          <div ngMenuItem value="Copier" class="cursor-pointer rounded px-3 py-1.5 text-sm text-slate-700 data-[active=true]:bg-blue-50">Copier</div>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-toolbar">
+    <h2 id="t-toolbar" class="mb-3 text-lg font-semibold text-slate-800">Toolbar</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngToolbar</code>, <code>ngToolbarWidget</code>, <code>ngToolbarWidgetGroup</code> — un
+      seul arrêt de tabulation, flèches pour passer d'un bouton à l'autre.
+    </p>
+    <div ngToolbar aria-label="Mise en forme" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 p-1">
+      <button ngToolbarWidget (click)="gras.set(!gras())" [attr.aria-pressed]="gras()" class="rounded px-3 py-1.5 text-sm font-bold text-slate-700 aria-pressed:bg-blue-100 aria-pressed:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">G</button>
+      <button ngToolbarWidget (click)="italique.set(!italique())" [attr.aria-pressed]="italique()" class="rounded px-3 py-1.5 text-sm italic text-slate-700 aria-pressed:bg-blue-100 aria-pressed:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">I</button>
+      <div ngToolbarWidgetGroup role="group" aria-label="Alignement" class="flex gap-1 border-l border-slate-200 pl-2">
+        @for (a of ['gauche', 'centre', 'droite']; track a) {
+          <button ngToolbarWidget (click)="alignement.set($any(a))" [attr.aria-pressed]="alignement() === a" class="rounded px-3 py-1.5 text-sm capitalize text-slate-700 aria-pressed:bg-blue-100 aria-pressed:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">{{ a }}</button>
+        }
+      </div>
+    </div>
+    <p class="mt-3 text-sm text-slate-600" [class.font-bold]="gras()" [class.italic]="italique()" [class.text-center]="alignement() === 'centre'" [class.text-right]="alignement() === 'droite'">
+      Texte d'exemple mis en forme par la barre d'outils.
+    </p>
+  </section>
+
+  <!-- TREE -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-tree">
+    <h2 id="t-tree" class="mb-3 text-lg font-semibold text-slate-800">Tree</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngTree</code>, <code>ngTreeItem</code>, <code>ngTreeItemGroup</code> — flèches pour
+      naviguer, gauche/droite pour replier/déplier — choix :
+      <strong>{{ arbreChoisi().join(', ') || 'aucun' }}</strong>
+    </p>
+    <ul ngTree #tree="ngTree" [(value)]="arbreChoisi" [multi]="true" aria-label="Réalisateurs et films" class="w-72 rounded-lg border border-slate-200 p-1">
+      <ng-template [ngTemplateOutlet]="noeuds" [ngTemplateOutletContext]="{ nodes: arbre, parent: tree }" />
+    </ul>
+    <ng-template #noeuds let-nodes="nodes" let-parent="parent">
+      @for (node of nodes; track node.name) {
+        <li
+          ngTreeItem
+          #item="ngTreeItem"
+          [parent]="parent"
+          [value]="node.name"
+          [label]="node.name"
+          class="cursor-pointer rounded px-2 py-1 text-sm text-slate-700 aria-selected:bg-blue-50 aria-selected:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+        >
+          {{ node.name }}
+          @if (node.children) {
+            <ul role="group" class="ml-4">
+              <ng-template ngTreeItemGroup [ownedBy]="item" #group="ngTreeItemGroup">
+                <ng-template [ngTemplateOutlet]="noeuds" [ngTemplateOutletContext]="{ nodes: node.children, parent: group }" />
+              </ng-template>
+            </ul>
+          }
+        </li>
+      }
+    </ng-template>
+  </section>
+
+  <!-- GRID -->
+  <section class="rounded-xl bg-white p-6 shadow-sm" aria-labelledby="t-grid">
+    <h2 id="t-grid" class="mb-3 text-lg font-semibold text-slate-800">Grid</h2>
+    <p class="mb-3 text-sm text-slate-500">
+      <code>ngGrid</code>, <code>ngGridRow</code>, <code>ngGridCell</code>,
+      <code>ngGridCellWidget</code> — navigation à deux dimensions aux flèches.
+    </p>
+    <table ngGrid aria-label="Films" class="w-full border-collapse text-sm">
+      @for (ligne of grille; track $index; let i = $index) {
+        <tr ngGridRow>
+          @for (cellule of ligne; track $index; let j = $index) {
+            <td
+              ngGridCell
+              [role]="i === 0 ? 'columnheader' : 'gridcell'"
+              class="border border-slate-200 px-3 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+              [class.bg-slate-50]="i === 0"
+              [class.font-semibold]="i === 0"
+            >
+              @if (i > 0 && j === 0) {
+                <button ngGridCellWidget class="text-blue-700 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">{{ cellule }}</button>
+              } @else {
+                {{ cellule }}
+              }
+            </td>
+          }
+        </tr>
+      }
+    </table>
+  </section>
+</div>

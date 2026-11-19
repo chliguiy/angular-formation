@@ -6,6 +6,9 @@
     "nav.products": " Produits ",
     "nav.films": " Films ",
     "nav.logout": " Déconnexion ",
-    "nav.login": " Connexion "
+    "nav.login": " Connexion ",
+    "seo.films.title": "Films du Studio Ghibli – catalogue complet",
+    "seo.films.description": "Découvrez tous les films du Studio Ghibli : résumés, réalisateurs, années de sortie et scores.",
+    "seo.film.titleSuffix": " – Film du Studio Ghibli"
   }
 }

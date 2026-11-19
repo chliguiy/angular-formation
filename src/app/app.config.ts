@@ -1,8 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, isDevMode } from '@angular/core';
-import {
-  provideRouter,
-  withComponentInputBinding,
-} from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -11,6 +8,7 @@ import { provideEffects } from '@ngrx/effects';
 import { filmsFeature } from './films/state/films.reducer';
 import * as filmsEffects from './films/state/films.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,5 +19,9 @@ export const appConfig: ApplicationConfig = {
     provideStore({ [filmsFeature.name]: filmsFeature.reducer }),
     provideEffects(filmsEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };
