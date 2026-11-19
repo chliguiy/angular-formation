@@ -6,6 +6,9 @@
     "nav.products": " Products ",
     "nav.films": " Movies ",
     "nav.logout": " Sign out ",
-    "nav.login": " Sign in "
+    "nav.login": " Sign in ",
+    "seo.films.title": "Studio Ghibli movies – full catalogue",
+    "seo.films.description": "Browse every Studio Ghibli movie: summaries, directors, release years and scores.",
+    "seo.film.titleSuffix": " – Studio Ghibli movie"
   }
 }

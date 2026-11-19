@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Film } from './film.model';
+import { Seo } from '../seo/seo.service';
 
 @Component({
   selector: 'app-film-detail',
@@ -31,4 +32,28 @@ import { Film } from './film.model';
 export class FilmDetail {
   // Alimenté par le resolver (clé `film`) grâce à withComponentInputBinding()
   readonly film = input.required<Film>();
+  private readonly seo = inject(Seo);
+
+  /** SEO : title/description propres au film et données structurées Movie. */
+  private readonly seoEffect = effect(() => {
+    const f = this.film();
+    const suffix = $localize`:@@seo.film.titleSuffix:seo.film.titleSuffix`;
+    const description = f.description.length > 155 ? f.description.slice(0, 152) + '…' : f.description;
+    this.seo.set({
+      title: `${f.title}${suffix}`,
+      description,
+      path: `/films/${f.id}`,
+      image: f.movie_banner,
+      jsonLd: {
+        '@type': 'Movie',
+        name: f.title,
+        alternateName: f.original_title,
+        description: f.description,
+        image: f.movie_banner,
+        datePublished: f.release_date,
+        director: { '@type': 'Person', name: f.director },
+        duration: `PT${f.running_time}M`,
+      },
+    });
+  });
 }

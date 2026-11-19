@@ -51,7 +51,8 @@
                 }
               ],
               "outputHashing": "all",
-              "localize": ["fr", "en"]
+              "localize": ["fr", "en"],
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
